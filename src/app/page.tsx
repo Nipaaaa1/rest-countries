@@ -35,7 +35,7 @@ interface Country {
 export default function Home() {
   const [data, setData] = useState<Country[]>();
   const [search, setSearch] = useState<string>();
-  const [region, setRegion] = useState<string>("asia");
+  const [region, setRegion] = useState<string>("Asia");
 
   let searchTimeout: any;
 
