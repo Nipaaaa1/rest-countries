@@ -18,6 +18,7 @@ import {
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
 } from "@radix-ui/react-dropdown-menu";
+import Link from "next/link";
 
 interface Country {
   name: {
@@ -106,39 +107,41 @@ export default function Home() {
           ? data
               .filter((data) => data.region == region)
               .map((country) => (
-                <Card
+                <Link
+                  href={`/detail/${country.name.common}`}
                   key={country.name.common}
-                  className="overflow-clip transition ease-in-out hover:scale-105"
                 >
-                  <CardHeader className="p-0">
-                    <Image
-                      src={country.flags.svg}
-                      alt={`${country.name.common}'s flag`}
-                      width={0}
-                      height={0}
-                      className="h-max w-full border-b"
-                    />
-                  </CardHeader>
-                  <CardContent className="space-y-4 p-6">
-                    <span className="font-extrabold">
-                      {country.name.common}
-                    </span>
-                    <ul>
-                      <li>
-                        <span className="font-semibold">Population:</span>{" "}
-                        {country.population.toLocaleString("en-US")}
-                      </li>
-                      <li>
-                        <span className="font-semibold">Region:</span>{" "}
-                        {country.region}
-                      </li>
-                      <li>
-                        <span className="font-semibold">Capital:</span>{" "}
-                        {country.capital}
-                      </li>
-                    </ul>
-                  </CardContent>
-                </Card>
+                  <Card className="overflow-clip transition ease-in-out hover:scale-105">
+                    <CardHeader className="p-0">
+                      <Image
+                        src={country.flags.svg}
+                        alt={`${country.name.common}'s flag`}
+                        width={0}
+                        height={0}
+                        className="h-max w-full border-b"
+                      />
+                    </CardHeader>
+                    <CardContent className="space-y-4 p-6">
+                      <span className="font-extrabold">
+                        {country.name.common}
+                      </span>
+                      <ul>
+                        <li>
+                          <span className="font-semibold">Population:</span>{" "}
+                          {country.population.toLocaleString("en-US")}
+                        </li>
+                        <li>
+                          <span className="font-semibold">Region:</span>{" "}
+                          {country.region}
+                        </li>
+                        <li>
+                          <span className="font-semibold">Capital:</span>{" "}
+                          {country.capital}
+                        </li>
+                      </ul>
+                    </CardContent>
+                  </Card>
+                </Link>
               ))
           : ((<p>Start searching</p>) as any)}
       </main>
