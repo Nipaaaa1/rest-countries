@@ -56,12 +56,10 @@ export default function Home() {
 
   useEffect(() => {
     if (search) {
-      console.log(search);
       getData(
         `https://restcountries.com/v3.1/name/${search.toLowerCase()}?fields=flags,name,population,region,capital`,
       );
     }
-    console.log(data);
   }, [search]);
 
   return (
@@ -92,8 +90,8 @@ export default function Home() {
           <DropdownMenuSeparator />
           <DropdownMenuRadioGroup value={region} onValueChange={setRegion}>
             <DropdownMenuRadioItem value="Africa">Africa</DropdownMenuRadioItem>
-            <DropdownMenuRadioItem value="America">
-              America
+            <DropdownMenuRadioItem value="Americas">
+              Americas
             </DropdownMenuRadioItem>
             <DropdownMenuRadioItem value="Asia">Asia</DropdownMenuRadioItem>
             <DropdownMenuRadioItem value="Europe">Europe</DropdownMenuRadioItem>
@@ -125,7 +123,7 @@ export default function Home() {
                     <ul>
                       <li>
                         <span className="font-semibold">Population:</span>{" "}
-                        {country.population}
+                        {country.population.toLocaleString("en-US")}
                       </li>
                       <li>
                         <span className="font-semibold">Region:</span>{" "}
