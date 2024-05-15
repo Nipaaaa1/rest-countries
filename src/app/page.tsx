@@ -1,113 +1,125 @@
+"use client";
+
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Input } from "@/components/ui/input";
+import { ChevronDownIcon, MagnifyingGlassIcon } from "@radix-ui/react-icons";
+import { ChangeEvent, useEffect, useState } from "react";
+import axios from "axios";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import Image from "next/image";
 
-export default function Home() {
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+interface Country {
+  name: {
+    common: string;
+  };
+  flags: {
+    svg: string;
+  };
+  population: number;
+  region: string;
+  capital: string[];
+}
 
-      <div className="relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
+export default function Home() {
+  const [data, setData] = useState<Country[]>();
+  const [search, setSearch] = useState<string>();
+
+  let searchTimeout: any;
+
+  const getData = async (url: string) => {
+    try {
+      const response = await axios.get<Country[]>(url);
+      setData(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(() => {
+      setSearch(e.target.value);
+    }, 500);
+  };
+
+  useEffect(() => {
+    if (search) {
+      getData(
+        `https://restcountries.com/v3.1/name/${search}?fields=flags,name,population,region,capital`,
+      );
+    }
+    console.log(data);
+  }, [search]);
+
+  return (
+    <>
+      <div className="flex items-center gap-2 rounded-md bg-white px-6 py-2 shadow-md">
+        <MagnifyingGlassIcon className="size-5 opacity-60" />
+        <Input
+          className="border-0 shadow-none"
+          type="text"
+          onChange={handleSearch}
+          placeholder="Search for a country..."
         />
       </div>
-
-      <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-balance text-sm opacity-50">
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button
+            variant={"ghost"}
+            className="flex justify-between gap-8 bg-white px-6 py-6 text-foreground shadow-md"
+          >
+            Filter by Region
+            <ChevronDownIcon className="size-3" />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className="w-48 p-4">
+          <DropdownMenuItem>Africa</DropdownMenuItem>
+          <DropdownMenuItem>America</DropdownMenuItem>
+          <DropdownMenuItem>Asia</DropdownMenuItem>
+          <DropdownMenuItem>Europe</DropdownMenuItem>
+          <DropdownMenuItem>Oceania</DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+      <main className="grid w-full grid-cols-1 gap-6">
+        {data
+          ? data.map((country) => (
+              <Card key={country.name.common} className="overflow-clip">
+                <CardHeader className="p-0">
+                  <Image
+                    src={country.flags.svg}
+                    alt={`${country.name.common}'s flag`}
+                    width={0}
+                    height={0}
+                    className="h-max w-full border-b"
+                  />
+                </CardHeader>
+                <CardContent className="space-y-4 p-6">
+                  <span className="font-extrabold">{country.name.common}</span>
+                  <ul>
+                    <li>
+                      <span className="font-semibold">Population:</span>{" "}
+                      {country.population}
+                    </li>
+                    <li>
+                      <span className="font-semibold">Region:</span>{" "}
+                      {country.region}
+                    </li>
+                    <li>
+                      <span className="font-semibold">Capital:</span>{" "}
+                      {country.capital}
+                    </li>
+                  </ul>
+                </CardContent>
+              </Card>
+            ))
+          : ((<p>Start searching</p>) as any)}
+      </main>
+    </>
   );
 }
