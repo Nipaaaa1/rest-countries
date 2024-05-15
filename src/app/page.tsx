@@ -101,12 +101,15 @@ export default function Home() {
           </DropdownMenuRadioGroup>
         </DropdownMenuContent>
       </DropdownMenu>
-      <main className="grid w-full grid-cols-1 gap-6">
+      <main className="grid w-full grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
         {data
           ? data
               .filter((data) => data.region == region)
               .map((country) => (
-                <Card key={country.name.common} className="overflow-clip">
+                <Card
+                  key={country.name.common}
+                  className="overflow-clip transition ease-in-out hover:scale-105"
+                >
                   <CardHeader className="p-0">
                     <Image
                       src={country.flags.svg}
