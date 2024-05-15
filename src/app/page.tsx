@@ -19,18 +19,8 @@ import {
   DropdownMenuRadioItem,
 } from "@radix-ui/react-dropdown-menu";
 import Link from "next/link";
-
-interface Country {
-  name: {
-    common: string;
-  };
-  flags: {
-    svg: string;
-  };
-  population: number;
-  region: string;
-  capital: string[];
-}
+import { getData } from "@/utils/getData";
+import { Country } from "@/utils/types";
 
 export default function Home() {
   const [data, setData] = useState<Country[]>();
@@ -38,15 +28,6 @@ export default function Home() {
   const [region, setRegion] = useState<string>("Asia");
 
   let searchTimeout: any;
-
-  const getData = async (url: string) => {
-    try {
-      const response = await axios.get<Country[]>(url);
-      setData(response.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
     clearTimeout(searchTimeout);
@@ -59,6 +40,7 @@ export default function Home() {
     if (search) {
       getData(
         `https://restcountries.com/v3.1/name/${search.toLowerCase()}?fields=flags,name,population,region,capital`,
+        setData,
       );
     }
   }, [search]);
