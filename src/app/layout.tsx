@@ -29,7 +29,9 @@ export default function RootLayout({
           </Button>
           </div>
         </nav>
+        <div className="container px-6 py-8">
         {children}
+        </div>
         </body>
     </html>
   );
