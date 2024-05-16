@@ -18,7 +18,7 @@ interface DetailedCountry {
       };
     };
   };
-  tld: string;
+  tld: string[];
   currencies: {
     [key: string]: {
       name: string;
