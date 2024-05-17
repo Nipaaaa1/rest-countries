@@ -22,7 +22,7 @@ export default function DetailPage() {
   let languages: string[] = [];
   useEffect(() => {
     getData(
-      `https://restcountries.com/v3.1/name/${params.slug}?fields=name,tld,currencies,languages,flags,borders,population,region,subregion,capital`,
+      `https://restcountries.com/v3.1/name/${params.slug}?fullText=true&fields=name,tld,currencies,languages,flags,borders,population,region,subregion,capital`,
       setData,
     );
   }, []);
