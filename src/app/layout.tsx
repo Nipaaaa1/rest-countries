@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Nunito_Sans } from "next/font/google";
-import { MoonIcon } from "@radix-ui/react-icons";
 import "./globals.css";
-import { Button } from "@/components/ui/button";
+import { ThemeProvider } from "@/components/theme-provider";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 const nunitoSans = Nunito_Sans({
   subsets: ["latin"],
@@ -22,19 +22,22 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={nunitoSans.className}>
-        <nav className="w-full bg-white shadow-md">
-          <div className="container flex justify-between px-6 py-8">
-            <span className="text-lg font-extrabold">Where in the world?</span>
-            <Button
-              variant={"ghost"}
-              className="flex items-center gap-1 bg-white font-semibold text-foreground"
-            >
-              <MoonIcon className="size-5" />
-              Dark Mode
-            </Button>
-          </div>
-        </nav>
-        <div className="container space-y-12 px-6 py-8">{children}</div>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <nav className="w-full bg-white shadow-md">
+            <div className="container flex justify-between px-6 py-8">
+              <span className="text-lg font-extrabold">
+                Where in the world?
+              </span>
+              <ThemeToggle />
+            </div>
+          </nav>
+          <div className="container space-y-12 px-6 py-8">{children}</div>
+        </ThemeProvider>
       </body>
     </html>
   );
