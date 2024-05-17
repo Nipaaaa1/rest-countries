@@ -36,7 +36,7 @@ export default function DetailPage() {
       <Button
         asChild
         variant={"ghost"}
-        className="flex w-max gap-2 bg-white px-6 shadow-md"
+        className="flex w-max gap-2 bg-white px-6 shadow-md dark:bg-card"
       >
         <Link href="/">
           <ArrowLeftIcon className="size-3" />
@@ -100,7 +100,7 @@ export default function DetailPage() {
                     key={index}
                     className={buttonVariants({
                       variant: "ghost",
-                      className: "bg-white px-6",
+                      className: "bg-white px-6 dark:bg-card",
                     })}
                   >
                     {value}

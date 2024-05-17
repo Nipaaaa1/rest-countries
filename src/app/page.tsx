@@ -47,7 +47,7 @@ export default function Home() {
 
   return (
     <>
-      <div className="flex items-center gap-2 rounded-md bg-white px-6 py-2 shadow-md">
+      <div className="flex items-center gap-2 rounded-md bg-white px-6 py-2 shadow-md dark:bg-card">
         <MagnifyingGlassIcon className="size-5 opacity-60" />
         <Input
           className="border-0 shadow-none"
@@ -60,17 +60,17 @@ export default function Home() {
         <DropdownMenuTrigger asChild>
           <Button
             variant={"ghost"}
-            className="flex justify-between gap-8 bg-white px-6 py-6 text-foreground shadow-md"
+            className="flex justify-between gap-8 bg-white px-6 py-6 text-foreground shadow-md dark:bg-card"
           >
             Filter by Region
             <ChevronDownIcon className="size-3" />
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-48 p-4">
+        <DropdownMenuContent className="w-48 p-4 dark:bg-card">
           <DropdownMenuLabel>
             <span className="font-semibold">Region:</span> {region}
           </DropdownMenuLabel>
-          <DropdownMenuSeparator />
+          <DropdownMenuSeparator className="dark:bg-foreground/20" />
           <DropdownMenuRadioGroup value={region} onValueChange={setRegion}>
             <DropdownMenuRadioItem value="Africa">Africa</DropdownMenuRadioItem>
             <DropdownMenuRadioItem value="Americas">

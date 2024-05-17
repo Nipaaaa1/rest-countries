@@ -9,7 +9,7 @@ export const ThemeToggle = () => {
   return (
     <Button
       variant={"ghost"}
-      className="flex items-center gap-1 bg-white font-semibold text-foreground"
+      className="flex items-center gap-1 bg-white font-semibold text-foreground dark:bg-card"
       onClick={() => setTheme("dark")}
     >
       <MoonIcon className="size-5" />

@@ -28,7 +28,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <nav className="w-full bg-white shadow-md">
+          <nav className="w-full bg-white shadow-md dark:bg-card">
             <div className="container flex justify-between px-6 py-8">
               <span className="text-lg font-extrabold">
                 Where in the world?
