@@ -47,43 +47,49 @@ export default function Home() {
 
   return (
     <>
-      <div className="flex items-center gap-2 rounded-md bg-white px-6 py-2 shadow-md">
-        <MagnifyingGlassIcon className="size-5 opacity-60" />
-        <Input
-          className="border-0 shadow-none"
-          type="text"
-          onChange={handleSearch}
-          placeholder="Search for a country..."
-        />
+      <div className="flex w-full flex-col gap-8 lg:flex-row lg:justify-between">
+        <div className="flex w-full max-w-96 items-center gap-2 rounded-md bg-white px-6 py-2 shadow-md dark:bg-card">
+          <MagnifyingGlassIcon className="size-5 opacity-60" />
+          <Input
+            className="border-0 shadow-none"
+            type="text"
+            onChange={handleSearch}
+            placeholder="Search for a country..."
+          />
+        </div>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button
+              variant={"ghost"}
+              className="flex w-max justify-between gap-8 bg-white px-6 py-6 text-foreground shadow-md dark:bg-card"
+            >
+              Filter by Region
+              <ChevronDownIcon className="size-3" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-48 p-4 dark:bg-card">
+            <DropdownMenuLabel>
+              <span className="font-semibold">Region:</span> {region}
+            </DropdownMenuLabel>
+            <DropdownMenuSeparator className="dark:bg-foreground/20" />
+            <DropdownMenuRadioGroup value={region} onValueChange={setRegion}>
+              <DropdownMenuRadioItem value="Africa">
+                Africa
+              </DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value="Americas">
+                Americas
+              </DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value="Asia">Asia</DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value="Europe">
+                Europe
+              </DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value="Oceania">
+                Oceania
+              </DropdownMenuRadioItem>
+            </DropdownMenuRadioGroup>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button
-            variant={"ghost"}
-            className="flex justify-between gap-8 bg-white px-6 py-6 text-foreground shadow-md"
-          >
-            Filter by Region
-            <ChevronDownIcon className="size-3" />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-48 p-4">
-          <DropdownMenuLabel>
-            <span className="font-semibold">Region:</span> {region}
-          </DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <DropdownMenuRadioGroup value={region} onValueChange={setRegion}>
-            <DropdownMenuRadioItem value="Africa">Africa</DropdownMenuRadioItem>
-            <DropdownMenuRadioItem value="Americas">
-              Americas
-            </DropdownMenuRadioItem>
-            <DropdownMenuRadioItem value="Asia">Asia</DropdownMenuRadioItem>
-            <DropdownMenuRadioItem value="Europe">Europe</DropdownMenuRadioItem>
-            <DropdownMenuRadioItem value="Oceania">
-              Oceania
-            </DropdownMenuRadioItem>
-          </DropdownMenuRadioGroup>
-        </DropdownMenuContent>
-      </DropdownMenu>
       <main className="grid w-full grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
         {data
           ? data

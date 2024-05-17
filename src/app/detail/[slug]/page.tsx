@@ -22,7 +22,7 @@ export default function DetailPage() {
   let languages: string[] = [];
   useEffect(() => {
     getData(
-      `https://restcountries.com/v3.1/name/${params.slug}?fields=name,tld,currencies,languages,flags,borders,population,region,subregion,capital`,
+      `https://restcountries.com/v3.1/name/${params.slug}?fullText=true&fields=name,tld,currencies,languages,flags,borders,population,region,subregion,capital`,
       setData,
     );
   }, []);
@@ -36,14 +36,14 @@ export default function DetailPage() {
       <Button
         asChild
         variant={"ghost"}
-        className="flex w-max gap-2 bg-white px-6 shadow-md"
+        className="flex w-max gap-2 bg-white px-6 shadow-md dark:bg-card"
       >
         <Link href="/">
           <ArrowLeftIcon className="size-3" />
           Back
         </Link>
       </Button>
-      <div className="grid w-full grid-cols-1 gap-10">
+      <div className="grid w-full grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-20 ">
         {data ? (
           <>
             <Image
@@ -54,58 +54,62 @@ export default function DetailPage() {
               className="h-max w-full shadow-md"
             />
             <div className="space-y-6">
-              <h1 className="text-xl font-extrabold">{data[0].name.common}</h1>
-              <ul>
-                <li className="space-x-1">
-                  <span className="font-semibold">Native Name: </span>
-                  {nativeName.join(", ")}
-                </li>
-                <li>
-                  <span className="font-semibold">Population: </span>
-                  {data[0].population.toLocaleString("en-US")}
-                </li>
-                <li>
-                  <span className="font-semibold">Region: </span>
-                  {data[0].region}
-                </li>
-                <li>
-                  <span className="font-semibold">Sub Region: </span>
-                  {data[0].subregion}
-                </li>
-                <li>
-                  <span className="font-semibold">Capital: </span>
-                  {data[0].capital}
-                </li>
-              </ul>
-              <ul>
-                <li>
-                  <span className="font-semibold">Top Level Domain: </span>
-                  {data[0].tld.join(", ")}
-                </li>
-                <li>
-                  <span className="font-semibold">Currencies: </span>
-                  {currencies.join(", ")}
-                </li>
-                <li>
-                  <span className="font-semibold">Languages: </span>
-                  {languages.join(", ")}
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h2 className="text-lg font-semibold">Border Countries: </h2>
-              <div className="flex flex-wrap gap-2">
-                {data[0].borders.map((value, index) => (
-                  <span
-                    key={index}
-                    className={buttonVariants({
-                      variant: "ghost",
-                      className: "bg-white px-6",
-                    })}
-                  >
-                    {value}
-                  </span>
-                ))}
+              <h1 className="text-xl font-extrabold lg:text-2xl">
+                {data[0].name.common}
+              </h1>
+              <div className="grid grid-cols-1 gap-6 text-sm lg:grid-cols-2">
+                <ul>
+                  <li className="space-x-1">
+                    <span className="font-semibold">Native Name: </span>
+                    {nativeName.join(", ")}
+                  </li>
+                  <li>
+                    <span className="font-semibold">Population: </span>
+                    {data[0].population.toLocaleString("en-US")}
+                  </li>
+                  <li>
+                    <span className="font-semibold">Region: </span>
+                    {data[0].region}
+                  </li>
+                  <li>
+                    <span className="font-semibold">Sub Region: </span>
+                    {data[0].subregion}
+                  </li>
+                  <li>
+                    <span className="font-semibold">Capital: </span>
+                    {data[0].capital}
+                  </li>
+                </ul>
+                <ul>
+                  <li>
+                    <span className="font-semibold">Top Level Domain: </span>
+                    {data[0].tld.join(", ")}
+                  </li>
+                  <li>
+                    <span className="font-semibold">Currencies: </span>
+                    {currencies.join(", ")}
+                  </li>
+                  <li>
+                    <span className="font-semibold">Languages: </span>
+                    {languages.join(", ")}
+                  </li>
+                </ul>
+              </div>
+              <div className="flex flex-col gap-2 lg:flex-row">
+                <h2 className="text-lg font-semibold">Border Countries: </h2>
+                <div className="flex flex-wrap gap-2">
+                  {data[0].borders.map((value, index) => (
+                    <span
+                      key={index}
+                      className={buttonVariants({
+                        variant: "ghost",
+                        className: "bg-white px-6 dark:bg-card",
+                      })}
+                    >
+                      {value}
+                    </span>
+                  ))}
+                </div>
               </div>
             </div>
           </>
